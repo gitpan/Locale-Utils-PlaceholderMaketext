@@ -1,4 +1,4 @@
-#!perl -T
+#!perl -T ## no critic (TidyCode)
 
 use strict;
 use warnings;
@@ -13,7 +13,7 @@ my $obj = Locale::Utils::PlaceholderMaketext->new;
 # undef converted to q{}
 () = print
     $obj->expand_gettext(
-        'foo %1 bar',
+        '%% foo %1 bar',
         undef,
     ),
     "\n";
@@ -49,13 +49,13 @@ for (undef, 0 .. 2, '3234567.890') {
         "\n";
 }
 
-# $Id: 12_expand_gettext.pl 359 2011-11-10 08:34:44Z steffenw $
+# $Id: 12_expand_gettext.pl 397 2012-04-24 15:15:49Z steffenw $
 
 __END__
 
 Output:
 
-foo  bar
+% foo  bar
 bar zero baz
 foo and bar %quant(%2,singular,plural,zero) baz
 foo and bar zero baz

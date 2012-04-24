@@ -6,7 +6,6 @@ example/11_expand_maketext.pl
 example/12_expand_gettext.pl
 lib/Locale/Utils/PlaceholderMaketext.pm
 MANIFEST			This list of files
-META.json
 README
 t/01_use.t
 t/02_exceptions.t
@@ -22,3 +21,4 @@ t/pod_coverage.t
 t/prereq_build.t
 Makefile.PL
 META.yml
+META.json
