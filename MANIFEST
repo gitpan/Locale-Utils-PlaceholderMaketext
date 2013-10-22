@@ -1,4 +1,3 @@
-Build.PL
 Changes
 example/01_maketext_to_gettext.pl
 example/02_gettext_to_maketext.pl

@@ -6,17 +6,16 @@ WriteMakefile
   'NAME' => 'Locale::Utils::PlaceholderMaketext',
   'VERSION_FROM' => 'lib/Locale/Utils/PlaceholderMaketext.pm',
   'PREREQ_PM' => {
-                   'Moose' => 0,
-                   'MooseX::StrictConstructor' => 0,
-                   'MooseX::Types::Moose' => 0,
+                   'Carp' => 0,
+                   'Moo' => '1.003001',
+                   'MooX::StrictConstructor' => 0,
+                   'MooX::Types::MooseLike' => 0,
                    'Scalar::Util' => 0,
-                   'Syntax::Feature::Method' => 0,
                    'Test::Differences' => '0.60',
                    'Test::Exception' => 0,
                    'Test::More' => 0,
                    'Test::NoWarnings' => 0,
-                   'namespace::autoclean' => 0,
-                   'syntax' => 0
+                   'namespace::autoclean' => 0
                  },
   'INSTALLDIRS' => 'site',
   'EXE_FILES' => [],

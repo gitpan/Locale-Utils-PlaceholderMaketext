@@ -4,7 +4,7 @@
       "Steffen Winkler <steffenw at cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112621",
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.132140",
    "license" : [
       "perl_5"
    ],
@@ -17,9 +17,9 @@
       "build" : {
          "requires" : {
             "Test::Differences" : "0.60",
-            "Test::Exception" : 0,
-            "Test::More" : 0,
-            "Test::NoWarnings" : 0
+            "Test::Exception" : "0",
+            "Test::More" : "0",
+            "Test::NoWarnings" : "0"
          }
       },
       "configure" : {
@@ -29,25 +29,25 @@
       },
       "runtime" : {
          "recommends" : {
+            "Pod::Coverage::Moose" : "0",
             "Test::Pod" : "1.14",
             "Test::Pod::Coverage" : "1.04"
          },
          "requires" : {
-            "Moose" : 0,
-            "MooseX::StrictConstructor" : 0,
-            "MooseX::Types::Moose" : 0,
-            "Scalar::Util" : 0,
-            "Syntax::Feature::Method" : 0,
-            "namespace::autoclean" : 0,
-            "perl" : "5.006",
-            "syntax" : 0
+            "Carp" : "0",
+            "Moo" : "1.003001",
+            "MooX::StrictConstructor" : "0",
+            "MooX::Types::MooseLike" : "0",
+            "Scalar::Util" : "0",
+            "namespace::autoclean" : "0",
+            "perl" : "5.006"
          }
       }
    },
    "provides" : {
       "Locale::Utils::PlaceholderMaketext" : {
          "file" : "lib/Locale/Utils/PlaceholderMaketext.pm",
-         "version" : "0.002"
+         "version" : "0.003"
       }
    },
    "release_status" : "stable",
@@ -56,5 +56,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.002"
+   "version" : "0.003"
 }
