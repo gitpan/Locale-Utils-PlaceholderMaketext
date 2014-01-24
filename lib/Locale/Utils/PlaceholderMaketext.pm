@@ -1,13 +1,15 @@
 package Locale::Utils::PlaceholderMaketext; ## no critic (TidyCode)
 
+use strict;
+use warnings;
+use Carp qw(confess);
+use Scalar::Util qw(looks_like_number);
 use Moo;
 use MooX::StrictConstructor;
 use MooX::Types::MooseLike::Base qw(Bool Str CodeRef);
-use Carp qw(confess);
-use Scalar::Util qw(looks_like_number);
 use namespace::autoclean;
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 has strict => (
     is  => 'rw',
@@ -32,7 +34,8 @@ sub maketext_to_gettext {
 
     defined $string
         or return $string;
-    $string =~ s{ ## no critic (ComplexRegexes)
+    ## no critic (ComplexRegexes)
+    $string =~ s{
         [~] ( [~\[\]] )                      # $1 - unescape
         |
         ( [%] )                              # $2 - escape
@@ -57,6 +60,7 @@ sub maketext_to_gettext {
         ? "%$6"
         : "%$3(%$4$5)"
     }xmsge;
+    ## use critic (ComplexRegexes)
 
     return $string;
 }
@@ -66,7 +70,8 @@ sub gettext_to_maketext {
 
     defined $string
         or return $string;
-    $string =~ s{ ## no critic (ComplexRegexes)
+    ## no critic (ComplexRegexes)
+    $string =~ s{
         [%] ( [%] )                          # $1 - unescape
         |
         ( [~\[\]] )                          # $2 - escape
@@ -76,7 +81,7 @@ sub gettext_to_maketext {
             ( [[:alpha:]*\#] [[:alpha:]_]* ) # $3 - function name
             [(]
             [%] ( [1-9] \d* )                # $4 - variable
-            ( [^\)]* )                       # $5 - arguments
+            ( [^)]* )                        # $5 - arguments
             [)]
             |                                # or
             ( [1-9] \d* )                    # $6 - variable
@@ -91,6 +96,7 @@ sub gettext_to_maketext {
         ? "[_$6]"
         : "[$3,_$4$5]"
     }xmsge;
+    ## use critic (ComplexRegexes)
 
     return $string;
 }
@@ -150,7 +156,8 @@ sub expand_maketext {
         ? $args[0]
         : [ @args ];
 
-    $text =~ s{ ## no critic (ComplexRegexes)
+    ## no critic (ComplexRegexes)
+    $text =~ s{
         [~] ( [~\[\]] )                # $1: escaped
         |
         (                              # $2: text
@@ -170,6 +177,7 @@ sub expand_maketext {
         ? $1
         : $self->_replace($arg_ref, $2, $3, $4, $5, $6, $7)
     }xmsge;
+    ## use critic (ComplexRegexes)
 
     return $text;
 }
@@ -183,19 +191,20 @@ sub expand_gettext {
         ? $args[0]
         : [ @args ];
 
-    $text =~ s{ ## no critic (ComplexRegexes)
-        [%] ( % )                  # $1: escaped
+    ## no critic (ComplexRegexes)
+    $text =~ s{
+        [%] ( % )                 # $1: escaped
         |
-        (                          # $2: text
+        (                         # $2: text
             [%] (?: quant | [*] )
             [(]
-            [%] ( \d+ )            # $3: n
-            [,] ( [^,\)]* )        # $4: singular
-            (?: [,] ( [^,\)]* ) )? # $5: plural
-            (?: [,] ( [^,\)]* ) )? # $6: zero
+            [%] ( \d+ )           # $3: n
+            [,] ( [^,)]* )        # $4: singular
+            (?: [,] ( [^,)]* ) )? # $5: plural
+            (?: [,] ( [^,)]* ) )? # $6: zero
             [)]
             |
-            [%] ( \d+ )            # $7: n
+            [%] ( \d+ )           # $7: n
         )
     }
     {
@@ -203,6 +212,7 @@ sub expand_gettext {
         ? $1
         : $self->_replace($arg_ref, $2, $3, $4, $5, $6, $7)
     }xmsge;
+    ## use critic (ComplexRegexes)
 
     return $text;
 }
@@ -217,13 +227,13 @@ __END__
 
 Locale::Utils::PlaceholderMaketext - Utils to expand maketext palaceholders
 
-$Id: PlaceholderMaketext.pm 406 2013-10-22 16:28:13Z steffenw $
+$Id: PlaceholderMaketext.pm 479 2014-01-24 12:11:07Z steffenw $
 
 $HeadURL: svn+ssh://steffenw@svn.code.sf.net/p/perl-gettext-oo/code/Locale-Utils-PlaceholderMaketext/trunk/lib/Locale/Utils/PlaceholderMaketext.pm $
 
 =head1 VERSION
 
-0.003
+0.004
 
 =head1 SYNOPSIS
 
@@ -318,7 +328,7 @@ For quant undef will be converted to 0.
 If it is needed to localize e.g. the numerics
 than describe this in a code reference.
 
-    my $coderef = sub {
+    my $code_ref = sub {
         my ($value, $type, $function_name) = @_;
 
         # $value is never undefined
@@ -392,19 +402,17 @@ none
 
 =head1 DEPENDENCIES
 
+L<Carp|Carp>
+
+L<Scalar::Util|Scalar::Util>
+
 L<Moo|Moo>
 
 L<MooX::StrictConstructor|MooX::StrictConstructor>
 
 L<MooX::Types::MooseLike|MooX::Types::MooseLike>
 
-L<Carp|Carp>
-
-L<Scalar::Util|Scalar::Util>
-
 L<namespace::autoclean|namespace::autoclean>
-
-L<syntax|syntax>
 
 =head1 INCOMPATIBILITIES
 
@@ -426,7 +434,7 @@ Steffen Winkler
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2011 - 2013,
+Copyright (c) 2011 - 2014,
 Steffen Winkler
 C<< <steffenw at cpan.org> >>.
 All rights reserved.
@@ -434,5 +442,3 @@ All rights reserved.
 This module is free software;
 you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
-=cut
